@@ -1,0 +1,30 @@
+
+services:
+
+  api:
+    build: .
+    ports:
+      - "3001:3000"
+    depends_on:
+      - postgres
+      - mongo
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/restaurant
+      MONGO_URL: mongodb://mongo:27017/reviews
+    command: npm run dev
+
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: restaurant
+    ports:
+      - "5433:5432"
+
+  mongo:
+    image: mongo:7
+    restart: always
+    ports:
+      - "27017:27017"
