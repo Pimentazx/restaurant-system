@@ -1,107 +1,168 @@
 # Restaurant System API
-API REST para gerenciamento de restaurantes, reservas e avaliações, utilizando PostgreSQL + MongoDB.
 
-# Tecnologias
+API REST para gerenciamento de restaurantes, reservas e avaliações, utilizando PostgreSQL e MongoDB, com containerização Docker, testes automatizados, integração contínua e deploy em ambiente cloud.
 
-Node.js
+## Tecnologias
 
-Express
+### Backend
 
-Prisma (PostgreSQL)
+* Node.js
+* Express.js
 
-MongoDB
+### Banco de Dados
 
-Mongoose
+* PostgreSQL
+* Prisma ORM
+* MongoDB
+* Mongoose
 
-Nodemon
+### DevOps
 
-# Banco de Dados
+* Docker
+* Docker Compose
+* GitHub Actions
+* AWS EC2
 
-## PostgreSQL
+### Testes
 
-Responsável por:
+* Testes automatizados da aplicação
 
-Restaurants
+## Arquitetura
 
-Reservations
+A aplicação utiliza uma arquitetura híbrida com dois bancos de dados:
 
-## MongoDB
+### PostgreSQL
 
-Responsável por:
+Responsável por armazenar:
 
-Reviews (avaliações)
+* Restaurants
+* Reservations
 
-# Como executar o projeto
+### MongoDB
 
-## Clonar o repositório
+Responsável por armazenar:
+
+* Reviews
+
+## Funcionalidades
+
+### Restaurantes
+
+* Criar restaurante
+* Listar restaurantes
+* Buscar restaurante por ID
+* Remover restaurante
+
+### Reservas
+
+* Criar reserva
+* Listar reservas
+
+### Avaliações
+
+* Criar avaliação
+* Listar avaliações por restaurante
+* Atualizar avaliação
+* Remover avaliação
+
+## Como executar com Docker
+
+### Clonar o repositório
 
 ```bash
-git clone SEU_LINK_AQUI
+git clone <SEU_REPOSITORIO>
 cd restaurant-system
 ```
 
-## Instalar dependências
+### Executar a aplicação
+
+```bash
+docker-compose up -d --build
+```
+
+### Verificar containers
+
+```bash
+docker ps
+```
+
+## Executando localmente
+
+### Instalar dependências
 
 ```bash
 npm install
 ```
 
-## Configurar o arquivo .env
+### Configurar variáveis de ambiente
 
-```bash
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/restaurantdb"
-MONGO_URL="mongodb://localhost:27017/restaurantReviews"
+```env
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/restaurant
+MONGO_URL=mongodb://localhost:27017/reviews
 PORT=3000
 ```
 
-## Rodar as migrations (PostgreSQL)
+### Aplicar schema do Prisma
 
 ```bash
-npx prisma migrate dev
+npx prisma db push
 ```
 
-## Iniciar o servidor
+### Executar aplicação
 
 ```bash
 npm run dev
 ```
 
-## Servidor disponível em:
+## Endpoints
 
-```bash
-http://localhost:3000
-```
+### Restaurants
 
-# Endpoints 
+| Método | Endpoint         |
+| ------ | ---------------- |
+| POST   | /restaurants     |
+| GET    | /restaurants     |
+| GET    | /restaurants/:id |
+| DELETE | /restaurants/:id |
 
-## Restaurants
+### Reservations
 
-POST /restaurants
+| Método | Endpoint      |
+| ------ | ------------- |
+| POST   | /reservations |
+| GET    | /reservations |
 
-GET /restaurants
+### Reviews
 
-GET /restaurants/:id
+| Método | Endpoint               |
+| ------ | ---------------------- |
+| POST   | /reviews               |
+| GET    | /reviews/:restaurantId |
+| PUT    | /reviews/:id           |
+| DELETE | /reviews/:id           |
 
-DELETE /restaurants/:id
+## Integração Contínua
 
-## Reviews
+O projeto possui pipeline automatizada utilizando GitHub Actions para validação da aplicação e execução das verificações definidas no fluxo de CI.
 
-POST /reviews
+## Deploy
 
-GET /reviews/:restaurantId
+A aplicação foi publicada em uma instância AWS EC2 utilizando Docker, permitindo a execução isolada dos serviços:
 
-PUT /reviews/:id
+* API Node.js
+* PostgreSQL
+* MongoDB
 
-DELETE /reviews/:id
+## Objetivo
 
-# Objetivo
+Este projeto foi desenvolvido para praticar:
 
-Projeto desenvolvido para praticar:
-
-Integração entre banco relacional e não relacional
-
-Criação de API REST
-
-Organização modular
-
-Uso de Prisma e Mongoose
+* Desenvolvimento de APIs REST
+* Integração entre banco relacional e não relacional
+* Arquitetura modular
+* Utilização de Prisma ORM e Mongoose
+* Containerização com Docker
+* Testes automatizados
+* Integração Contínua (CI)
+* Deploy em ambiente cloud (AWS)
+* Boas práticas de desenvolvimento backend
